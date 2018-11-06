@@ -1,23 +1,17 @@
-/*********
-  Rui Santos
-  Complete project details at http://randomnerdtutorials.com  
-*********/
+/* mostly copy/paste from Rui Santos http://randomnerdtutorials.com */
 
-// Including the ESP8266 WiFi library
 #include <ESP8266WiFi.h>
 #include <OneWire.h>
 #include <DallasTemperature.h>
 #include <PubSubClient.h>
 
-
-const char* ssid = "DNVGLGuest";
+const char* ssid = "yourssid";
 const char* password = "";
 
-const char* ssid2 = "DNVGL-Visitors";
+const char* ssid2 = "yoursecondssid";
 const char* password2 = "";
 
-//const char* mqtt_server = "192.168.10.29";
-const char* mqtt_server = "37.187.106.16";
+const char* mqtt_server = "37.187.106.16"; //test.mosquitto.org
 
 char msg[50];
 long waited = 0;
@@ -40,8 +34,7 @@ void setup() {
   // Initializing serial port for debugging purposes
   Serial.begin(115200);
   delay(10);
-
-  DS18B20.begin(); // IC Default 9 bit. If you have troubles consider upping it 12. Ups the delay giving the IC more time to process the temperature measurement
+  DS18B20.begin(); 
   WiFi.mode(WIFI_STA);
   Serial.println(ssid);
   WiFi.begin(ssid, password);
@@ -56,7 +49,7 @@ void setup() {
   if (WiFi.status() != WL_CONNECTED) {
     Serial.print("Going DeepSleep");
     Serial.println("no wifi, sleep 3 hrs");
-    ESP.deepSleep(3e10); // go deepsleep for 10 min and try all over again
+    ESP.deepSleep(3e10); 
   }
     
   // Printing the ESP IP address
@@ -75,7 +68,7 @@ void reconnect() {
       Serial.println("connected");
     } else {
       Serial.print(".. give up, no connectivity. Sleep 3 hrs min");
-      ESP.deepSleep(3e10); // go deepsleep for 3 hrs
+      ESP.deepSleep(3e10); 
     }
 }
 
@@ -111,9 +104,7 @@ void loop() {
     reconnect();
   }
   client.publish("norway/hovik/sea/temperature" , temperatureCString, true);    
-  Serial.println("goto sleep 3 hrs");
-  
-  ESP.deepSleep(3e10); // deepsleep 3 hrs
+  ESP.deepSleep(3e10); 
   
 }
 
