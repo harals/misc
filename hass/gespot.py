@@ -1,4 +1,6 @@
 #
+# Save to config/custom_components/sensor/
+# 
 # Usage:
 # 
 # sensor: 
